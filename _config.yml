@@ -1,0 +1,66 @@
+# Site Configuration
+title: "Sapieando"
+description: "Psicanálise como ela é - Um blog que aborda assuntos da psicanálise de uma forma leve e direta"
+lang: pt-BR
+url: "" # Will be set to GitHub Pages URL
+baseurl: "" # Leave empty if using username.github.io
+
+# Author
+author:
+  name: "France Florenzano"
+  email: "psifranceflorenzano@gmail.com"
+
+# GitHub Pages
+github:
+  username: "" # Set this when creating the repository
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+
+# Plugins (GitHub Pages compatible)
+# GitHub Pages automatically includes these plugins, but listing them is fine
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Theme (not using a theme, but this prevents warnings)
+theme: null
+
+# Exclude files from Jekyll processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .gitignore
+  - README.md
+  - DEPLOYMENT_GUIDE.md
+  - FREE_HOSTING_ALTERNATIVES.md
+  - DEPLOY_GITHUB_PAGES.md
+  - STRUCTURE.md
+
+# Collections
+# Note: 'posts' is a default Jekyll collection, no need to redefine it
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "France Florenzano"
+
+# Sass/SCSS settings
+sass:
+  style: compressed
+
+# Kramdown settings
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge

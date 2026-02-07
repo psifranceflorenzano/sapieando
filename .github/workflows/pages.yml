@@ -1,0 +1,58 @@
+# Workflow para GitHub Pages (use apenas se necessário)
+# IMPORTANTE: Para Jekyll, o GitHub Pages faz build automático.
+# Use este workflow APENAS se você mudou Settings → Pages → Source para "GitHub Actions"
+# Caso contrário, DELETE este arquivo e use o build automático.
+
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # ou 'master' se for seu branch padrão
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Previne múltiplos builds simultâneos
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Build with Jekyll
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
