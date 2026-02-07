@@ -8,7 +8,32 @@
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  <!-- Fallback for debugging: if CSS doesn't load, check browser console -->
+  <!-- Debug: CSS Path = {{ '/assets/css/main.css' | relative_url }} -->
+  <!-- Debug: Baseurl = {{ site.baseurl }} -->
+  <!-- Debug: URL = {{ site.url }} -->
+  <!-- Fallback inline styles - if you see beige background, CSS file is NOT loading -->
+  <style>
+    body { background-color: #E3CAB1 !important; }
+  </style>
+  <script>
+    // #region agent log
+    (function() {
+      const cssLink = document.querySelector('link[href*="main.css"]');
+      const debugInfo = {
+        cssPath: cssLink ? cssLink.href : 'NOT FOUND',
+        baseurl: '{{ site.baseurl }}',
+        url: '{{ site.url }}',
+        timestamp: new Date().toISOString()
+      };
+      console.log('CSS Debug Info:', debugInfo);
+      if (cssLink) {
+        fetch(cssLink.href, {method: 'HEAD'})
+          .then(r => console.log('CSS file status:', r.ok ? 'EXISTS (' + r.status + ')' : 'NOT FOUND (' + r.status + ')'))
+          .catch(e => console.error('CSS file error:', e));
+      }
+    })();
+    // #endregion agent log
+  </script>
   
   {% seo %}
 </head>

@@ -9,6 +9,9 @@ gem "jekyll-feed", "~> 0.12"
 gem "jekyll-seo-tag", "~> 2.8"
 gem "jekyll-sitemap", "~> 1.4"
 
+# Note: jekyll-sass-converter is included automatically by GitHub Pages
+# but explicitly listing it can help with local builds
+
 # Windows não suporta alguns gems
 platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo", ">= 1", "< 3"
