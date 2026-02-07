@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'pt-BR' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  
+  {% seo %}
+</head>
+<body>
+  <div class="site-container">
+    <!-- Logo/Header Row -->
+    <div class="columns logo-row">
+      <div class="sidebar">
+        <div class="site-logo">
+          <!-- Add logo here if available -->
+        </div>
+      </div>
+      <div class="main-content">
+        <!-- Empty for logo row -->
+      </div>
+    </div>
+    
+    <!-- Main Content Row -->
+    <div class="columns main-row">
+      <div class="sidebar">
+        {% include header.html %}
+      </div>
+      
+      <div class="main-content">
+        <main>
+          {{ content }}
+        </main>
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="site-footer-wrapper">
+      {% include footer.html %}
+    </footer>
+  </div>
+</body>
+</html>
