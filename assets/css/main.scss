@@ -1,5 +1,4 @@
 ---
-# Jekyll front matter - this file will be processed by Jekyll
 ---
 
 // Color Palette
@@ -86,6 +85,9 @@ body {
   background-color: $background;
   margin: 0;
   padding: 0;
+  
+  // Test: If you see beige background, CSS is loading correctly
+  // This verifies SCSS compilation is working
 }
 
 // Layout
@@ -180,6 +182,27 @@ a {
   &:hover {
     opacity: 0.8;
     text-decoration: underline;
+  }
+}
+
+// Logo
+.site-logo {
+  margin-bottom: 2rem;
+  
+  .logo-image {
+    width: 147px;
+    height: 147px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .logo-placeholder {
+    width: 147px;
+    height: 147px;
+    border-radius: 50%;
+    background-color: rgba(135, 61, 53, 0.1);
+    border: 2px solid $border-color;
   }
 }
 

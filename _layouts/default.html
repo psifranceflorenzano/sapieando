@@ -8,6 +8,7 @@
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <!-- Fallback for debugging: if CSS doesn't load, check browser console -->
   
   {% seo %}
 </head>
@@ -17,7 +18,11 @@
     <div class="columns logo-row">
       <div class="sidebar">
         <div class="site-logo">
-          <!-- Add logo here if available -->
+          {% if site.logo %}
+            <img src="{{ site.logo | relative_url }}" alt="{{ site.title }}" class="logo-image">
+          {% else %}
+            <div class="logo-placeholder"></div>
+          {% endif %}
         </div>
       </div>
       <div class="main-content">
