@@ -8,59 +8,11 @@
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  <!-- Debug: CSS Path = {{ '/assets/css/main.css' | relative_url }} -->
-  <!-- Debug: Baseurl = {{ site.baseurl }} -->
-  <!-- Debug: URL = {{ site.url }} -->
-  <!-- Fallback inline test - if you see red background, CSS is NOT loading -->
-  <style>
-    body { background-color: #E3CAB1 !important; }
-    .debug-css-test { 
-      position: fixed; 
-      top: 0; 
-      right: 0; 
-      background: red; 
-      color: white; 
-      padding: 5px; 
-      font-size: 10px; 
-      z-index: 9999;
-      display: none;
-    }
-    /* If this red box appears, CSS file is not loading */
-  </style>
-  <div class="debug-css-test">CSS NOT LOADING - Check console</div>
+  <!-- Fallback for debugging: if CSS doesn't load, check browser console -->
   
   {% seo %}
 </head>
 <body>
-  <!-- Debug info - visible on page -->
-  <script>
-    // #region agent log
-    (function() {
-      const cssLink = document.querySelector('link[href*="main.css"]');
-      const debugInfo = {
-        cssPath: cssLink ? cssLink.href : 'NOT FOUND',
-        baseurl: '{{ site.baseurl }}',
-        url: '{{ site.url }}',
-        timestamp: new Date().toISOString()
-      };
-      console.log('CSS Debug Info:', debugInfo);
-      // Try to load CSS and check if it exists
-      if (cssLink) {
-        fetch(cssLink.href, {method: 'HEAD'})
-          .then(r => {
-            console.log('CSS file exists:', r.ok, 'Status:', r.status);
-            if (!r.ok) {
-              document.querySelector('.debug-css-test').style.display = 'block';
-            }
-          })
-          .catch(e => {
-            console.error('CSS file error:', e);
-            document.querySelector('.debug-css-test').style.display = 'block';
-          });
-      }
-    })();
-    // #endregion agent log
-  </script>
   <div class="site-container">
     <!-- Logo/Header Row -->
     <div class="columns logo-row">
