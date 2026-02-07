@@ -26,6 +26,10 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+# Ensure SCSS files are processed
+include:
+  - assets
+
 # Theme (not using a theme, but this prevents warnings)
 theme: null
 
