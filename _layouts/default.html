@@ -6,11 +6,10 @@
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   
-  <!-- Stylesheet - Using root css/ folder (bypasses Jekyll processing) -->
-  <!-- Common fix from GitHub discussion: remove leading slash, add type attribute -->
-  <link rel="stylesheet" type="text/css" href="{{ '/css/main.css' | relative_url }}" id="main-css">
-  <!-- Alternative: Try without relative_url filter if above doesn't work -->
-  <!-- <link rel="stylesheet" type="text/css" href="css/main.css" id="main-css-alt"> -->
+  <!-- Stylesheet - Try root-level file first (most reliable) -->
+  <link rel="stylesheet" type="text/css" href="/main.css" id="main-css">
+  <!-- Fallback: css folder -->
+  <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" id="main-css-fallback"> -->
   <!-- Alternative: assets/css/main.css (commented out - use if root css/ doesn't work) -->
   <!-- <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}"> -->
   <!-- Debug: CSS Path = {{ '/assets/css/main.css' | relative_url }} -->
