@@ -6,8 +6,10 @@
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <!-- Stylesheet - Primary location: assets/css/main.css -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" id="main-css">
+  <!-- Fallback: Alternative location if primary fails (uncomment if needed) -->
+  <!-- <link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}"> -->
   <!-- Debug: CSS Path = {{ '/assets/css/main.css' | relative_url }} -->
   <!-- Debug: Baseurl = {{ site.baseurl }} -->
   <!-- Debug: URL = {{ site.url }} -->
