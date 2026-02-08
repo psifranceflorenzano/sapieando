@@ -40,3 +40,7 @@ logs/
 
 # WordPress export (not needed for Jekyll)
 site-export/
+
+# Documentation files at root level (keep README.md if needed)
+/*.md
+!README.md

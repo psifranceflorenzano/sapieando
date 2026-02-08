@@ -6,15 +6,8 @@
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   
-  <!-- Stylesheet - Using site.baseurl for proper path resolution -->
-  <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/main.css" id="main-css">
-  <!-- Fallback: css folder -->
-  <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" id="main-css-fallback"> -->
-  <!-- Alternative: assets/css/main.css (commented out - use if root css/ doesn't work) -->
-  <!-- <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}"> -->
-  <!-- Debug: CSS Path = {{ '/assets/css/main.css' | relative_url }} -->
-  <!-- Debug: Baseurl = {{ site.baseurl }} -->
-  <!-- Debug: URL = {{ site.url }} -->
+  <!-- Stylesheet - Using Jekyll's relative_url filter for proper asset path resolution -->
+  <link rel="stylesheet" type="text/css" href="{{ '/assets/css/main.css' | relative_url }}" id="main-css">
   <!-- Fallback inline styles - if you see beige background, CSS file is NOT loading -->
   <style>
     body { background-color: #E3CAB1 !important; }

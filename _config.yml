@@ -2,8 +2,15 @@
 title: "Sapieando"
 description: "Psicanálise como ela é - Um blog que aborda assuntos da psicanálise de uma forma leve e direta"
 lang: pt-BR
-url: "" # Will be set to GitHub Pages URL
-baseurl: "" # Leave empty if using username.github.io
+# GitHub Pages URL configuration
+# For user/organization site (username.github.io): baseurl: /, url: https://USERNAME.github.io
+# For project site (any other repo name): baseurl: /REPO-NAME, url: https://USERNAME.github.io
+# IMPORTANT: Replace USERNAME and REPO-NAME with your actual values!
+# 
+# Current setting assumes user site. If this is a project site (repo name: Sapieando),
+# change baseurl to: baseurl: /Sapieando
+baseurl: /  # Use / for user site, or /REPO-NAME for project site
+url: https://USERNAME.github.io  # Replace USERNAME with your GitHub username
 
 # Author
 author:
@@ -26,12 +33,11 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# Ensure assets and css folders are processed
+# Ensure assets folder is processed
 # Note: folders should be included by default, but explicitly listing them
 include:
   - assets
   - assets/css
-  - css
 
 # Theme (not using a theme, but this prevents warnings)
 theme: null
@@ -44,11 +50,6 @@ exclude:
   - vendor
   - .git
   - .gitignore
-  - README.md
-  - DEPLOYMENT_GUIDE.md
-  - FREE_HOSTING_ALTERNATIVES.md
-  - DEPLOY_GITHUB_PAGES.md
-  - STRUCTURE.md
 
 # Collections
 # Note: 'posts' is a default Jekyll collection, no need to redefine it
