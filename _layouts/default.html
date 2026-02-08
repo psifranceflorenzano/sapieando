@@ -6,8 +6,8 @@
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   
-  <!-- Stylesheet - Try root-level file first (most reliable) -->
-  <link rel="stylesheet" type="text/css" href="/main.css" id="main-css">
+  <!-- Stylesheet - Using site.baseurl for proper path resolution -->
+  <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/main.css" id="main-css">
   <!-- Fallback: css folder -->
   <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" id="main-css-fallback"> -->
   <!-- Alternative: assets/css/main.css (commented out - use if root css/ doesn't work) -->
