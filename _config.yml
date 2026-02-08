@@ -26,11 +26,12 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# Ensure assets folder is processed
-# Note: assets folder should be included by default, but explicitly listing it
+# Ensure assets and css folders are processed
+# Note: folders should be included by default, but explicitly listing them
 include:
   - assets
   - assets/css
+  - css
 
 # Theme (not using a theme, but this prevents warnings)
 theme: null
