@@ -17,6 +17,10 @@ author:
   name: "France Florenzano"
   email: "psifranceflorenzano@gmail.com"
 
+# Site Logo/Icon
+# Path to your logo image (relative to site root)
+logo: /assets/images/sapi_logo_quadrado.png
+
 # GitHub Pages
 github:
   username: "" # Set this when creating the repository
@@ -38,6 +42,7 @@ plugins:
 include:
   - assets
   - assets/css
+  - assets/images
 
 # Theme (not using a theme, but this prevents warnings)
 theme: null

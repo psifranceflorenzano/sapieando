@@ -2,7 +2,7 @@
 <html lang="{{ site.lang | default: 'pt-BR' }}">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   
@@ -35,35 +35,14 @@
   {% seo %}
 </head>
 <body>
+  <!-- Main Header -->
+  {% include main-header.html %}
+  
+  <!-- Main Content -->
   <div class="site-container">
-    <!-- Logo/Header Row -->
-    <div class="columns logo-row">
-      <div class="sidebar">
-        <div class="site-logo">
-          {% if site.logo %}
-            <img src="{{ site.logo | relative_url }}" alt="{{ site.title }}" class="logo-image">
-          {% else %}
-            <div class="logo-placeholder"></div>
-          {% endif %}
-        </div>
-      </div>
-      <div class="main-content">
-        <!-- Empty for logo row -->
-      </div>
-    </div>
-    
-    <!-- Main Content Row -->
-    <div class="columns main-row">
-      <div class="sidebar">
-        {% include header.html %}
-      </div>
-      
-      <div class="main-content">
-        <main>
-          {{ content }}
-        </main>
-      </div>
-    </div>
+    <main class="main-content-wrapper">
+      {{ content }}
+    </main>
     
     <!-- Footer -->
     <footer class="site-footer-wrapper">

@@ -19,29 +19,17 @@ layout: default
             {% endfor %}
           </span>
           {% endif %}
+          <time class="post-date" datetime="{{ post.date | date: '%Y-%m-%d' }}">
+            {{ post.date | date: "%d/%m/%Y" }}
+          </time>
         </div>
-        <time class="post-date" datetime="{{ post.date | date: '%Y-%m-%d' }}">
-          {{ post.date | date: "%d/%m/%Y" }}
-        </time>
       </header>
-      
-      <div style="height: 20px;"></div>
       
       <div class="post-excerpt">
         {{ post.excerpt | default: post.content | strip_html | truncatewords: 30 }}
       </div>
       
       <a href="{{ post.url | relative_url }}" class="read-more">Ler mais</a>
-      
-      <div style="height: 30px;"></div>
-      
-      <hr class="post-separator">
     </article>
   {% endfor %}
-  
-  <!-- Pagination placeholder - can be enhanced with jekyll-paginate -->
-  <nav class="pagination">
-    <span class="pagination-previous">Anterior</span>
-    <span class="pagination-next">PRÓXIMO</span>
-  </nav>
 </div>
