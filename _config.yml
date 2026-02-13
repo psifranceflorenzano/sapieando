@@ -10,7 +10,7 @@ lang: pt-BR
 # Current setting assumes user site. If this is a project site (repo name: Sapieando),
 # change baseurl to: baseurl: /Sapieando
 baseurl: /  # Use / for user site, or /REPO-NAME for project site
-url: https://USERNAME.github.io  # Replace USERNAME with your GitHub username
+url: https://psifranceflorenzano.github.io/sapieando  # Replace USERNAME with your GitHub username
 
 # Author
 author:
@@ -23,7 +23,7 @@ logo: /assets/images/sapi_logo_quadrado.png
 
 # GitHub Pages
 github:
-  username: "" # Set this when creating the repository
+  username: "psifranceflorenzano" # Set this when creating the repository
 
 # Build settings
 markdown: kramdown

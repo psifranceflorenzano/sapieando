@@ -916,6 +916,11 @@ a:hover {
   font-size: 1.5rem;
 }
 
+/* Custom Giscus Theme - Match Blog Colors */
+/* A custom theme CSS file is available at assets/css/giscus-theme.css */
+/* The theme will automatically be used once site.url is configured in _config.yml */
+/* Colors: Primary #873D35, Background #E3CAB1 */
+
 /* Pagination */
 .pagination {
   display: flex;

@@ -15,6 +15,11 @@ layout: default
   <!-- Giscus Comments -->
   <div class="giscus-section">
     <h2>Comentários</h2>
+    {% comment %}
+      Custom theme: Once your site URL is configured in _config.yml,
+      uncomment the line below and comment out the "light" theme line.
+      Custom theme URL: {{ site.url }}{{ site.baseurl }}/assets/css/giscus-theme.css
+    {% endcomment %}
     <script src="https://giscus.app/client.js"
       data-repo="psifranceflorenzano/sapieando"
       data-repo-id="R_kgDORLBYOw"
@@ -25,7 +30,11 @@ layout: default
       data-reactions-enabled="1"
       data-emit-metadata="0"
       data-input-position="bottom"
-      data-theme="preferred_color_scheme"
+      {% if site.url != 'https://USERNAME.github.io' %}
+      data-theme="{{ site.url }}{{ site.baseurl }}/assets/css/giscus-theme.css"
+      {% else %}
+      data-theme="light"
+      {% endif %}
       data-lang="pt"
       crossorigin="anonymous"
       async>
