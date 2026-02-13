@@ -55,6 +55,13 @@ exclude:
   - vendor
   - .git
   - .gitignore
+  - venv
+  - env
+  - .venv
+  - blog_manager.py
+  - templates
+  - requirements.txt
+  - .cursor
 
 # Collections
 # Note: 'posts' is a default Jekyll collection, no need to redefine it

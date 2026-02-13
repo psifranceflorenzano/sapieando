@@ -10,7 +10,7 @@ import re
 import subprocess
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 import yaml
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 
@@ -167,6 +167,65 @@ class GitManager:
             return False
 
 
+class JekyllManager:
+    """Manages Jekyll build operations."""
+    
+    def __init__(self, workspace_dir: Path = WORKSPACE_DIR):
+        self.workspace_dir = workspace_dir
+    
+    def build_site(self) -> Tuple[bool, str]:
+        """
+        Trigger Jekyll build to regenerate pages.
+        Returns (success, message)
+        """
+        try:
+            # Check if bundle/jekyll is available
+            result = subprocess.run(
+                ['which', 'bundle'],
+                cwd=self.workspace_dir,
+                capture_output=True,
+                text=True
+            )
+            
+            if result.returncode != 0:
+                return False, "Jekyll não encontrado. Execute 'bundle install' primeiro."
+            
+            # Try to build with bundle exec jekyll build
+            # Clean build to avoid conflicts with excluded folders
+            build_result = subprocess.run(
+                ['bundle', 'exec', 'jekyll', 'build'],
+                cwd=self.workspace_dir,
+                capture_output=True,
+                text=True,
+                timeout=60  # 60 second timeout
+            )
+            
+            if build_result.returncode == 0:
+                return True, "Site Jekyll reconstruído com sucesso!"
+            else:
+                error_msg = build_result.stderr[:200] if build_result.stderr else "Erro desconhecido"
+                return False, f"Erro ao construir site: {error_msg}"
+                
+        except subprocess.TimeoutExpired:
+            return False, "Timeout ao construir site Jekyll"
+        except FileNotFoundError:
+            return False, "Jekyll não está instalado. Instale com: gem install bundler && bundle install"
+        except Exception as e:
+            return False, f"Erro ao construir site: {str(e)}"
+    
+    def is_jekyll_available(self) -> bool:
+        """Check if Jekyll is available."""
+        try:
+            result = subprocess.run(
+                ['which', 'bundle'],
+                cwd=self.workspace_dir,
+                capture_output=True
+            )
+            return result.returncode == 0
+        except:
+            return False
+
+
 def load_default_author() -> str:
     """Load default author from _config.yml."""
     try:
@@ -192,6 +251,7 @@ def new_post():
     """Create a new post."""
     post_manager = PostManager()
     git_manager = GitManager()
+    jekyll_manager = JekyllManager()
     
     if request.method == 'POST':
         title = request.form.get('title', '').strip()
@@ -216,13 +276,20 @@ def new_post():
         # Write file
         post_manager.write_post_file(filename, title, author, categories, excerpt, date, content)
         
+        # Build Jekyll site locally
+        jekyll_success, jekyll_msg = jekyll_manager.build_site()
+        if jekyll_success:
+            flash(f'Post criado! {jekyll_msg}', 'success')
+        else:
+            flash(f'Post criado, mas Jekyll build falhou: {jekyll_msg}', 'warning')
+        
         # Git operations
         commit_message = f"Adicionar post: {title}"
         if git_manager.commit_changes(commit_message):
             git_manager.push_changes()
-            flash('Post criado e enviado para o repositório com sucesso!', 'success')
+            flash('Alterações enviadas para o repositório GitHub!', 'success')
         else:
-            flash('Post criado, mas houve um erro ao fazer commit/push no git.', 'warning')
+            flash('Post criado localmente, mas houve um erro ao fazer commit/push no git.', 'warning')
         
         return redirect(url_for('index'))
     
@@ -238,6 +305,7 @@ def edit_post(filename):
     """Edit an existing post."""
     post_manager = PostManager()
     git_manager = GitManager()
+    jekyll_manager = JekyllManager()
     
     filepath = POSTS_DIR / filename
     if not filepath.exists():
@@ -272,13 +340,20 @@ def edit_post(filename):
         # Write file
         post_manager.write_post_file(new_filename, title, author, categories, excerpt, date, content)
         
+        # Build Jekyll site locally
+        jekyll_success, jekyll_msg = jekyll_manager.build_site()
+        if jekyll_success:
+            flash(f'Post editado! {jekyll_msg}', 'success')
+        else:
+            flash(f'Post editado, mas Jekyll build falhou: {jekyll_msg}', 'warning')
+        
         # Git operations
         commit_message = f"Editar post: {title}"
         if git_manager.commit_changes(commit_message):
             git_manager.push_changes()
-            flash('Post editado e enviado para o repositório com sucesso!', 'success')
+            flash('Alterações enviadas para o repositório GitHub!', 'success')
         else:
-            flash('Post editado, mas houve um erro ao fazer commit/push no git.', 'warning')
+            flash('Post editado localmente, mas houve um erro ao fazer commit/push no git.', 'warning')
         
         return redirect(url_for('index'))
     
@@ -299,6 +374,7 @@ def delete_post(filename):
     """Delete a post."""
     post_manager = PostManager()
     git_manager = GitManager()
+    jekyll_manager = JekyllManager()
     
     filepath = POSTS_DIR / filename
     if not filepath.exists():
@@ -311,13 +387,20 @@ def delete_post(filename):
     
     # Delete file
     if post_manager.delete_post(filename):
+        # Build Jekyll site locally (to remove the page)
+        jekyll_success, jekyll_msg = jekyll_manager.build_site()
+        if jekyll_success:
+            flash(f'Post removido! {jekyll_msg}', 'success')
+        else:
+            flash(f'Post removido, mas Jekyll build falhou: {jekyll_msg}', 'warning')
+        
         # Git operations
         commit_message = f"Remover post: {title}"
         if git_manager.commit_changes(commit_message):
             git_manager.push_changes()
-            flash('Post removido e alterações enviadas para o repositório!', 'success')
+            flash('Alterações enviadas para o repositório GitHub!', 'success')
         else:
-            flash('Post removido, mas houve um erro ao fazer commit/push no git.', 'warning')
+            flash('Post removido localmente, mas houve um erro ao fazer commit/push no git.', 'warning')
     else:
         flash('Erro ao remover o post', 'error')
     
@@ -325,10 +408,24 @@ def delete_post(filename):
 
 
 if __name__ == '__main__':
+    jekyll_manager = JekyllManager()
+    jekyll_available = jekyll_manager.is_jekyll_available()
+    
     print("\n" + "="*60)
     print("Blog Post Manager - Web Interface")
     print("="*60)
     print(f"\nAcesse: http://127.0.0.1:5000")
+    
+    if jekyll_available:
+        print("\n✓ Jekyll detectado - páginas serão geradas automaticamente")
+        print("  Para ver o site localmente, execute em outro terminal:")
+        print("  bundle exec jekyll serve")
+        print("  Depois acesse: http://localhost:4000")
+    else:
+        print("\n⚠ Jekyll não encontrado")
+        print("  Para gerar páginas localmente, instale Jekyll:")
+        print("  gem install bundler && bundle install")
+    
     print("\nPressione Ctrl+C para parar o servidor\n")
     print("="*60 + "\n")
     
