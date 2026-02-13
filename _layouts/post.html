@@ -30,11 +30,7 @@ layout: default
       data-reactions-enabled="1"
       data-emit-metadata="0"
       data-input-position="bottom"
-      {% if site.url != 'https://USERNAME.github.io' %}
-      data-theme="{{ site.url }}{{ site.baseurl }}/assets/css/giscus-theme.css"
-      {% else %}
-      data-theme="light"
-      {% endif %}
+      data-theme="https://raw.githubusercontent.com/psifranceflorenzano/sapieando/main/assets/css/giscus-theme.css"
       data-lang="pt"
       crossorigin="anonymous"
       async>
