@@ -9,6 +9,52 @@ _site/
 vendor/
 Gemfile.lock
 
+# Python management tools (not needed for GitHub Pages)
+blog_manager.py
+requirements.txt
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Flask templates (not needed for GitHub Pages)
+templates/
+
+# Testing and development tools (not needed for GitHub Pages)
+tests/
+pytest.ini
+.pytest_cache/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Kiro specs and documentation (development only)
+.kiro/
+docs/ARCHITECTURE.md
+docs/TESTING.md
+CONTRIBUTING.md
+BEFORE_AFTER.md
+
 # OS files
 .DS_Store
 .DS_Store?
@@ -22,6 +68,7 @@ Desktop.ini
 # IDE
 .vscode/
 .idea/
+.cursor/
 *.swp
 *.swo
 *~
@@ -40,7 +87,3 @@ logs/
 
 # WordPress export (not needed for Jekyll)
 site-export/
-
-# Documentation files at root level (keep README.md if needed)
-/*.md
-!README.md
