@@ -12,6 +12,8 @@ Gemfile.lock
 # Python management tools (not needed for GitHub Pages)
 blog_manager.py
 requirements.txt
+start-blog-manager.bat
+start-blog-manager.sh
 venv/
 __pycache__/
 *.py[cod]
