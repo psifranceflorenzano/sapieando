@@ -12,30 +12,118 @@ layout: default
     {{ content }}
   </div>
   
-  <!-- Giscus Comments -->
-  <div class="giscus-section">
+  <!-- Comments Section -->
+  <div class="comments-section">
     <h2>Comentários</h2>
-    {% comment %}
-      Custom theme: Once your site URL is configured in _config.yml,
-      uncomment the line below and comment out the "light" theme line.
-      Custom theme URL: {{ site.url }}{{ site.baseurl }}/assets/css/giscus-theme.css
-    {% endcomment %}
-    <script src="https://giscus.app/client.js"
-      data-repo="psifranceflorenzano/sapieando"
-      data-repo-id="R_kgDORLBYOw"
-      data-category="General"
-      data-category-id="DIC_kwDORLBYO84C2BYt"
-      data-mapping="pathname"
-      data-strict="0"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="bottom"
-      data-theme="https://raw.githubusercontent.com/psifranceflorenzano/sapieando/main/assets/css/giscus-theme.css"
-      data-lang="pt"
-      crossorigin="anonymous"
-      async>
-    </script>
+    
+    <!-- Display approved comments -->
+    {% assign post_comments = site.data.comments[page.slug] %}
+    {% if post_comments %}
+      {% assign approved_comments = post_comments | where: "status", "approved" | sort: "timestamp" %}
+      
+      {% if approved_comments.size > 0 %}
+        <div class="comments-list">
+          {% for comment in approved_comments %}
+            <div class="comment">
+              <div class="comment-header">
+                <span class="comment-author">{{ comment.name }}</span>
+                <span class="comment-date">{{ comment.timestamp | date: "%d/%m/%Y às %H:%M" }}</span>
+              </div>
+              <div class="comment-body">
+                {{ comment.comment | newline_to_br }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="no-comments">Ainda não há comentários. Seja o primeiro a comentar!</p>
+      {% endif %}
+    {% else %}
+      <p class="no-comments">Ainda não há comentários. Seja o primeiro a comentar!</p>
+    {% endif %}
+    
+    <!-- Comment submission form -->
+    <div class="comment-form-container">
+      <h3>Deixe um comentário</h3>
+      <form id="comment-form" class="comment-form">
+        <div class="form-group">
+          <label for="comment-name">Nome *</label>
+          <input type="text" id="comment-name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="comment-email">Email (opcional, não será publicado)</label>
+          <input type="email" id="comment-email" name="email">
+        </div>
+        
+        <div class="form-group">
+          <label for="comment-text">Comentário *</label>
+          <textarea id="comment-text" name="comment" rows="5" required minlength="10"></textarea>
+        </div>
+        
+        <!-- Honeypot field (hidden from humans, visible to bots) -->
+        <input type="text" name="honeypot" style="display:none" tabindex="-1" autocomplete="off">
+        
+        <button type="submit" class="btn-submit">Enviar Comentário</button>
+      </form>
+      
+      <div id="comment-message" class="comment-message" style="display:none"></div>
+    </div>
   </div>
+  
+  <script>
+    // Comment form submission via AJAX
+    document.getElementById('comment-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const form = e.target;
+      const messageDiv = document.getElementById('comment-message');
+      const submitButton = form.querySelector('.btn-submit');
+      
+      // Get form data
+      const formData = {
+        post_slug: '{{ page.slug }}',
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        comment: form.comment.value.trim(),
+        honeypot: form.honeypot.value
+      };
+      
+      // Disable submit button
+      submitButton.disabled = true;
+      submitButton.textContent = 'Enviando...';
+      
+      // Submit to Flask API
+      fetch('http://127.0.0.1:7856/api/comments/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        messageDiv.style.display = 'block';
+        if (data.success) {
+          messageDiv.className = 'comment-message success';
+          messageDiv.textContent = data.message;
+          form.reset();
+        } else {
+          messageDiv.className = 'comment-message error';
+          messageDiv.textContent = data.message;
+        }
+      })
+      .catch(error => {
+        messageDiv.style.display = 'block';
+        messageDiv.className = 'comment-message error';
+        messageDiv.textContent = 'Erro ao enviar comentário. Por favor, tente novamente.';
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Enviar Comentário';
+      });
+    });
+  </script>
   
   <!-- Post Navigation -->
   <nav class="post-navigation">

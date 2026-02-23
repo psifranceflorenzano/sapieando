@@ -293,8 +293,8 @@ a:hover {
   line-height: 0;
   transition: opacity 0.2s ease;
   flex-shrink: 0;
-  min-width: clamp(2.75rem, 8vw, 5rem);
-  min-height: clamp(2.75rem, 8vw, 5rem);
+  min-width: clamp(4rem, 12vw, 7rem);
+  min-height: clamp(4rem, 12vw, 7rem);
 }
 
 .header-logo-link:hover,
@@ -303,8 +303,8 @@ a:hover {
 }
 
 .header-logo {
-  width: clamp(2.75rem, 8vw, 5rem);
-  height: clamp(2.75rem, 8vw, 5rem);
+  width: clamp(4rem, 12vw, 7rem);
+  height: clamp(4rem, 12vw, 7rem);
   max-width: 100%;
   height: auto;
   object-fit: contain;
@@ -909,6 +909,8 @@ a:hover {
   margin-top: 4rem;
   padding-top: 3rem;
   border-top: 1px solid rgba(135, 61, 53, 0.15);
+  width: 100%;
+  min-height: 500px;
 }
 
 .giscus-section h2 {
@@ -917,9 +919,45 @@ a:hover {
 }
 
 /* Custom Giscus Theme - Match Blog Colors */
-/* A custom theme CSS file is available at assets/css/giscus-theme.css */
-/* The theme will automatically be used once site.url is configured in _config.yml */
-/* Colors: Primary #873D35, Background #E3CAB1 */
+/* Override Giscus colors using CSS custom properties */
+.giscus {
+  --color-btn-primary-text: #E3CAB1 !important;
+  --color-btn-primary-bg: #873D35 !important;
+  --color-btn-primary-border: #873D35 !important;
+  --color-btn-primary-hover-bg: #6B2F29 !important;
+  --color-btn-primary-hover-border: #6B2F29 !important;
+  --color-fg-default: #873D35 !important;
+  --color-fg-muted: #6B2F29 !important;
+  --color-canvas-default: #E3CAB1 !important;
+  --color-canvas-overlay: rgba(255, 255, 255, 0.9) !important;
+  --color-border-default: rgba(135, 61, 53, 0.2) !important;
+  --color-accent-fg: #873D35 !important;
+}
+
+/* Additional styling for Giscus iframe container */
+.giscus {
+  width: 100% !important;
+  min-height: 500px !important;
+  display: block;
+}
+
+.giscus-frame {
+  width: 100% !important;
+  min-height: 500px !important;
+  background-color: #E3CAB1;
+  border-radius: 8px;
+  padding: 1rem;
+  display: block;
+}
+
+/* Ensure Giscus iframe is properly sized */
+.giscus iframe,
+.giscus-frame iframe {
+  width: 100% !important;
+  min-height: 500px !important;
+  border: none;
+  display: block;
+}
 
 /* Pagination */
 .pagination {
@@ -984,3 +1022,194 @@ ol li {
 .mb-1 { margin-bottom: 1rem; }
 .mb-2 { margin-bottom: 2rem; }
 .mb-3 { margin-bottom: 3rem; }
+
+/* Comments Section */
+.comments-section {
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(135, 61, 53, 0.15);
+  width: 100%;
+}
+
+.comments-section h2 {
+  margin-bottom: 2rem;
+  font-size: clamp(1.5rem, 4vw + 0.5rem, 2rem);
+  font-family: "Albura SemiBold", "Albura", sans-serif;
+}
+
+.comments-section h3 {
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.25rem, 3.5vw + 0.5rem, 1.75rem);
+  font-family: "Albura SemiBold", "Albura", sans-serif;
+}
+
+/* Comments List */
+.comments-list {
+  margin-bottom: 3rem;
+}
+
+.comment {
+  padding: clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
+  background-color: rgba(255, 255, 255, 0.3);
+  border-left: 3px solid #873D35;
+  border-radius: clamp(0.25rem, 1vw, 0.5rem);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.comment-author {
+  font-weight: 545;
+  font-family: "Albura SemiBold", "Albura", sans-serif;
+  color: #873D35;
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+}
+
+.comment-date {
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  color: #6B2F29;
+}
+
+.comment-body {
+  line-height: 1.7;
+  color: #873D35;
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+}
+
+.no-comments {
+  color: #6B2F29;
+  font-style: italic;
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  margin: 2rem 0;
+}
+
+/* Comment Form */
+.comment-form-container {
+  margin-top: 3rem;
+  padding: clamp(1.5rem, 4vw, 2rem);
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: clamp(0.5rem, 1.5vw, 0.75rem);
+  border: 1px solid rgba(135, 61, 53, 0.15);
+}
+
+.comment-form {
+  max-width: 600px;
+}
+
+.form-group {
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #873D35;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+  width: 100%;
+  padding: clamp(0.625rem, 2vw, 0.75rem) clamp(0.75rem, 2.5vw, 1rem);
+  border: 2px solid rgba(135, 61, 53, 0.2);
+  border-radius: clamp(0.25rem, 1vw, 0.375rem);
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #873D35;
+  font-family: "Albura", sans-serif;
+  font-size: clamp(0.95rem, 2.5vw, 1rem);
+  line-height: 1.5;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  min-height: 2.75rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #873D35;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.btn-submit {
+  display: inline-block;
+  padding: clamp(0.75rem, 2.5vw, 0.875rem) clamp(1.5rem, 4vw, 2rem);
+  background-color: #873D35;
+  color: #E3CAB1;
+  border: none;
+  border-radius: clamp(0.25rem, 1vw, 0.375rem);
+  font-family: "Albura", sans-serif;
+  font-size: clamp(0.95rem, 2.5vw, 1rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  min-height: 2.75rem;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.btn-submit:hover,
+.btn-submit:focus {
+  background-color: #6B2F29;
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Comment Message */
+.comment-message {
+  margin-top: 1rem;
+  padding: clamp(0.75rem, 2.5vw, 1rem);
+  border-radius: clamp(0.25rem, 1vw, 0.375rem);
+  font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+  line-height: 1.5;
+}
+
+.comment-message.success {
+  background-color: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  color: #2E7D32;
+}
+
+.comment-message.error {
+  background-color: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  color: #C62828;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .comment-form-container {
+    padding: clamp(1rem, 3vw, 1.5rem);
+  }
+  
+  .comment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
