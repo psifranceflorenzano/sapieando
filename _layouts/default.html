@@ -6,6 +6,9 @@
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ '/assets/images/sapi_logo_quadrado.png' | relative_url }}">
+  
   <!-- Stylesheet - Using Jekyll's relative_url filter for proper asset path resolution -->
   <link rel="stylesheet" type="text/css" href="{{ '/assets/css/main.css' | relative_url }}" id="main-css">
   <!-- Fallback inline styles - if you see beige background, CSS file is NOT loading -->
