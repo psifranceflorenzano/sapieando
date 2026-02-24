@@ -125,16 +125,17 @@ body {
   
   .post-meta {
     font-size: clamp(0.75rem, 2vw, 0.875rem);
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
     gap: clamp(0.25rem, 1vw, 0.5rem);
   }
   
   .post-meta .post-date,
   .post-meta .post-categories {
-    margin-left: 0;
-    padding-left: 0;
-    border-left: none;
+    margin-left: clamp(0.25rem, 1vw, 0.5rem);
+    padding-left: clamp(0.25rem, 1vw, 0.5rem);
+    border-left: 1px solid rgba(135, 61, 53, 0.2);
   }
   
   .columns {
@@ -348,6 +349,18 @@ a:hover {
   line-height: 1.3;
 }
 
+.tagline-line1,
+.tagline-line2 {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .tagline-line1::after {
+    content: "\A";
+    white-space: pre;
+  }
+}
+
 .header-navigation {
   display: flex;
   align-items: center;
@@ -453,22 +466,28 @@ a:hover {
 /* Responsive Header - Mobile First */
 @media (max-width: 640px) {
   .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     gap: clamp(0.75rem, 3vw, 1rem);
   }
   
   .header-brand {
-    width: 100%;
+    width: auto;
+    flex: 1;
+    min-width: 0;
   }
   
   .header-navigation {
-    width: 100%;
+    width: auto;
+    flex-shrink: 0;
   }
   
   .nav-menu {
     flex-direction: row;
-    justify-content: flex-start;
-    gap: clamp(1rem, 4vw, 1.5rem);
-    width: 100%;
+    justify-content: flex-end;
+    gap: clamp(0.75rem, 3vw, 1rem);
+    width: auto;
     flex-wrap: nowrap;
   }
   
@@ -480,7 +499,8 @@ a:hover {
     width: auto;
     justify-content: center;
     white-space: nowrap;
-    padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(0.5rem, 2vw, 1rem);
+    padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(0.5rem, 2vw, 0.75rem);
+    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
   }
   
   .nav-menu a::after {
@@ -494,7 +514,12 @@ a:hover {
   }
   
   .nav-menu {
-    gap: clamp(0.75rem, 3vw, 1rem);
+    gap: clamp(0.5rem, 2vw, 0.75rem);
+  }
+  
+  .nav-menu a {
+    padding: clamp(0.4rem, 1.2vw, 0.6rem) clamp(0.4rem, 1.5vw, 0.6rem);
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
   }
 }
 
@@ -798,6 +823,11 @@ a:hover {
   flex-wrap: wrap;
 }
 
+/* Footer Tagline Mobile - Hidden on Desktop */
+.footer-tagline-mobile {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .site-footer-wrapper {
     margin-top: clamp(1.5rem, 5vw, 3rem);
@@ -809,31 +839,59 @@ a:hover {
   }
   
   .site-footer .footer-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: clamp(1rem, 3vw, 1.5rem);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
+    gap: clamp(0.75rem, 2.5vw, 1rem);
+    row-gap: clamp(0.5rem, 2vw, 0.75rem);
+    align-items: center;
   }
   
+  /* Row 1: Sapieando (left) | Contato: (right) */
   .footer-brand {
-    width: 100%;
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
+  }
+  
+  .footer-brand .footer-tagline {
+    display: none;
   }
   
   .footer-contact-compact {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: clamp(0.5rem, 2vw, 0.75rem);
-    width: 100%;
+    grid-column: 2;
+    grid-row: 1;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    width: auto;
+  }
+  
+  /* Row 2: Psicanálise acessível (left) | Icons (right) */
+  .footer-tagline-mobile {
+    display: block;
+    grid-column: 1;
+    grid-row: 2;
+    font-size: clamp(0.75rem, 2vw, 0.8rem);
+    color: #6B2F29;
+    margin: 0;
+    line-height: 1.3;
   }
   
   .contact-icons {
-    width: 100%;
-    justify-content: flex-start;
+    grid-column: 2;
+    grid-row: 2;
+    width: auto;
+    justify-content: flex-end;
   }
   
+  /* Row 3: Copyright (left, full width) */
   .footer-copyright {
+    grid-column: 1 / -1;
+    grid-row: 3;
     width: 100%;
     text-align: left;
-    margin-top: clamp(0.5rem, 1.5vw, 0.75rem);
+    margin-top: clamp(0.25rem, 1vw, 0.5rem);
   }
 }
 
